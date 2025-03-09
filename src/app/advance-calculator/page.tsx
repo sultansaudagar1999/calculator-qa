@@ -105,21 +105,28 @@ export default function AdvanceCalculator() {
                 <div className="space-y-4 mb-6">
                   {solution.steps.map((step, index) => (
                     <div key={index} className="bg-gray-50 p-4 rounded-lg">
-                      <p className="font-medium text-gray-700">
-                        {step.explanation}
-                      </p>
-                      {step.result && (
-                        <p className="mt-2 text-gray-600 font-mono">
-                          {step.result}
-                        </p>
-                      )}
+                      <div className="flex items-start gap-3">
+                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-medium">
+                          {index + 1}
+                        </span>
+                        <div className="flex-1">
+                          <p className="font-medium text-gray-700 whitespace-pre-wrap">
+                            {step.explanation}
+                          </p>
+                          {step.result && (
+                            <div className="mt-2 font-mono bg-white p-2 rounded border border-gray-200 text-blue-600">
+                              {step.result}
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
 
                 <div className="border-t pt-4">
                   <h3 className="text-lg font-semibold mb-2">Final Result:</h3>
-                  <div className="bg-gray-100 p-4 rounded-lg font-mono text-lg">
+                  <div className="bg-blue-50 p-4 rounded-lg font-mono text-lg text-blue-700 border border-blue-100">
                     {solution.finalResult}
                   </div>
                 </div>

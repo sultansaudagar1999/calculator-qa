@@ -63,6 +63,9 @@ The calculator will support the following features:
 │   │   ├── advance-calculator
 │   │   │   ├── layout.tsx
 │   │   │   └── page.tsx
+│   │   ├── api
+│   │   │   └── advance-calculator
+│   │   │       └── route.ts
 │   │   ├── favicon.ico
 │   │   ├── globals.css
 │   │   ├── layout.tsx
@@ -89,61 +92,6 @@ The calculator will support the following features:
 │       ├── prompt.ts
 │       └── utils.ts
 └── tsconfig.json
-
-11 directories, 35 files
-
-░▒▓ ~/Doc/calculator  master ⇡1  tree . -I "node_modules"
-
-.
-├── components.json
-├── eslint.config.mjs
-├── next.config.ts
-├── next-env.d.ts
-├── package.json
-├── package-lock.json
-├── postcss.config.mjs
-├── public
-│   ├── file.svg
-│   ├── globe.svg
-│   ├── next.svg
-│   ├── vercel.svg
-│   └── window.svg
-├── README.md
-├── src
-│   ├── api
-│   │   └── advance-calculator
-│   │       └── route.ts
-│   ├── app
-│   │   ├── advance-calculator
-│   │   │   ├── layout.tsx
-│   │   │   └── page.tsx
-│   │   ├── favicon.ico
-│   │   ├── globals.css
-│   │   ├── layout.tsx
-│   │   └── page.tsx
-│   ├── components
-│   │   ├── calculator-components
-│   │   │   ├── calculator-button-grid.tsx
-│   │   │   ├── calculator-button.tsx
-│   │   │   ├── calculator-display.tsx
-│   │   │   ├── calculator-document.tsx
-│   │   │   ├── calculator-tabs.tsx
-│   │   │   └── calculator.tsx
-│   │   ├── global
-│   │   │   └── footer.tsx
-│   │   └── ui
-│   │       ├── button.tsx
-│   │       ├── dialog.tsx
-│   │       └── tabs.tsx
-│   ├── instructions
-│   │   └── instructions.md
-│   └── lib
-│       ├── calculator-utils.ts
-│       ├── constants.ts
-│       ├── prompt.ts
-│       └── utils.ts
-└── tsconfig.json
-
 ```
 
 ---

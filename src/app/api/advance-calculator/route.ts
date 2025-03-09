@@ -1,9 +1,7 @@
-import { OpenAI } from "openai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { ADVANCED_CALCULATOR_PROMPT } from "@/lib/prompt";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
 export async function POST(req: Request) {
   try {
@@ -16,47 +14,31 @@ export async function POST(req: Request) {
       );
     }
 
-    // Send request to ChatGPT with the predefined prompt
-    const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo", // Using the free tier model
-      messages: [
-        {
-          role: "system",
-          content: ADVANCED_CALCULATOR_PROMPT,
-        },
-        {
-          role: "user",
-          content: `Solve this mathematical expression step by step: ${expression}
-          Please format your response in this JSON structure:
-          {
-            "steps": [
-              {
-                "explanation": "Step explanation",
-                "result": "Intermediate result"
-              }
-            ],
-            "finalResult": "Final calculated result"
-          }`,
-        },
-      ],
-      temperature: 0.7,
-      max_tokens: 500,
-    });
+    // Use Gemini 1.5 Flash model
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    // Parse the response to match our StepByStepSolution interface
-    const content = response.choices[0].message.content;
-    let solution;
-    try {
-      if (!content) {
-        throw new Error("No solution generated");
-      }
-      solution = JSON.parse(content);
-    } catch {
-      // If JSON parsing fails, format the response as best we can
-      solution = {
-        steps: [
-          { explanation: content || "No explanation available", result: "" },
+    const prompt = `
+      ${ADVANCED_CALCULATOR_PROMPT}
+      Solve this mathematical expression step by step: ${expression}
+      Please return the result in the following JSON format:
+      {
+        "steps": [
+          { "explanation": "Step explanation", "result": "Intermediate result" }
         ],
+        "finalResult": "Final calculated result"
+      }
+    `;
+
+    const result = await model.generateContent(prompt);
+    const response = await result.response.text(); // Extract response text
+
+    let solution;
+
+    try {
+      solution = JSON.parse(response);
+    } catch {
+      solution = {
+        steps: [{ explanation: response || "No explanation available", result: "" }],
         finalResult: "See steps above",
       };
     }
@@ -66,8 +48,7 @@ export async function POST(req: Request) {
     console.error("Error in solve route:", error);
     return Response.json(
       {
-        error:
-          error instanceof Error ? error.message : "Failed to solve expression",
+        error: error instanceof Error ? error.message : "Failed to solve expression",
       },
       { status: 500 }
     );
