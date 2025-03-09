@@ -1,5 +1,6 @@
 "use client"
 
+import { basicButtons, scientificButtons } from "@/lib/constants"
 import { CalculatorButton } from "./calculator-button"
 
 interface CalculatorButtonGridProps {
@@ -8,60 +9,7 @@ interface CalculatorButtonGridProps {
 }
 
 export function CalculatorButtonGrid({ mode, onButtonClick }: CalculatorButtonGridProps) {
-  const basicButtons = [
-    "C",
-    "⌫",
-    "(",
-    ")",
-    "7",
-    "8",
-    "9",
-    "/",
-    "4",
-    "5",
-    "6",
-    "*",
-    "1",
-    "2",
-    "3",
-    "-",
-    "0",
-    ".",
-    "=",
-    "+",
-  ]
-
-  const scientificButtons = [
-    "C",
-    "⌫",
-    "(",
-    ")",
-    "sin",
-    "cos",
-    "tan",
-    "/",
-    "7",
-    "8",
-    "9",
-    "*",
-    "4",
-    "5",
-    "6",
-    "-",
-    "1",
-    "2",
-    "3",
-    "+",
-    "0",
-    ".",
-    "=",
-    "^",
-    "π",
-    "e",
-    "log",
-    "√",
-  ]
-
+ 
   const buttons = mode === "basic" ? basicButtons : scientificButtons
 
   return (
