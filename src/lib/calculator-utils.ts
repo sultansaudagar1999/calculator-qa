@@ -1,37 +1,54 @@
-export function evaluate(expression: string): number {
-  // Sanitize the input to prevent empty or invalid expressions
-  if (!expression || expression.trim() === "") {
-    return 0;
-  }
+import * as math from "mathjs";
 
-  // Replace scientific constants
-  expression = expression.replace(/π/g, Math.PI.toString());
-  expression = expression.replace(/e/g, Math.E.toString());
+// Create a math.js instance with custom configuration
+const mathInstance = math.create(math.all);
 
-  // Handle scientific functions
-  expression = handleScientificFunctions(expression);
-
-  // Use Function constructor to evaluate the expression
-  try {
-    // This is a simplified approach - in production, you'd want a more robust parser
-    return Function(`'use strict'; return (${expression})`)();
-  } catch {
-    throw new Error("Invalid expression");
-  }
+// Helper to convert input to use degrees
+function convertToDegrees(expression: string): string {
+  return expression.replace(/(sin|cos|tan)\((.*?)\)/g, "$1($2 deg)");
 }
 
-function handleScientificFunctions(expression: string): string {
-  // Replace scientific functions with their JavaScript equivalents
-  expression = expression.replace(/sin\(/g, "Math.sin(");
-  expression = expression.replace(/cos\(/g, "Math.cos(");
-  expression = expression.replace(/tan\(/g, "Math.tan(");
-  expression = expression.replace(/log\(/g, "Math.log10(");
-  expression = expression.replace(/√\(/g, "Math.sqrt(");
-  expression = expression.replace(/\^/g, "**");
+export function evaluate(expression: string): string {
+  // Sanitize the input to prevent empty or invalid expressions
+  if (!expression || expression.trim() === "") {
+    return "0";
+  }
 
-  // Handle √ without parentheses (e.g., √4)
-  const sqrtRegex = /√(\d+(\.\d+)?)/g;
-  expression = expression.replace(sqrtRegex, "Math.sqrt($1)");
+  try {
+    // Convert expression to use degrees explicitly
+    const degExpression = convertToDegrees(expression);
 
-  return expression;
+    // Use math.js evaluate function
+    const result = mathInstance.evaluate(degExpression);
+
+    // Format the result based on its type
+    if (typeof result === "number") {
+      if (Math.abs(result) < 1e-10) return "0"; // Handle very small numbers
+      // Format numbers to avoid floating point precision issues
+      return mathInstance.format(result, { precision: 14 });
+    } else if (mathInstance.typeOf(result) === "Complex") {
+      // Handle complex numbers
+      return `${result.re.toFixed(10)} ${result.im >= 0 ? "+" : "-"} ${Math.abs(
+        result.im
+      ).toFixed(10)}i`;
+    } else if (mathInstance.typeOf(result) === "Matrix") {
+      // Handle matrices
+      return mathInstance.format(result, { precision: 10 });
+    } else {
+      // For other types
+      return result.toString();
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      // Handle specific math.js errors
+      if (error.message.includes("Undefined symbol")) {
+        throw new Error("Unknown function or variable");
+      } else if (error.message.includes("Unexpected end of expression")) {
+        throw new Error("Incomplete expression");
+      } else if (error.message.includes("Division by zero")) {
+        throw new Error("Cannot divide by zero");
+      }
+    }
+    throw new Error("Invalid expression");
+  }
 }
