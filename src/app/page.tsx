@@ -1,4 +1,10 @@
-import { Button } from "@/components/ui/button";
+import Calculator from "@/components/calculator-components/calculator";
+
 export default function Home() {
-  return <Button>Click me</Button>;
+  return (
+    <div className="flex justify-center items-center h-screen">
+      <Calculator />
+    </div>
+    
+  )
 }
