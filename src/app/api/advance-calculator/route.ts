@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { ADVANCED_CALCULATOR_PROMPT } from "@/lib/prompt";
+import { HTTP_STATUS_BAD_REQUEST, HTTP_STATUS_INTERNAL_SERVER_ERROR } from "@/lib/constants";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
@@ -10,7 +11,7 @@ export async function POST(req: Request) {
     if (!expression) {
       return Response.json(
         { error: "No expression provided." },
-        { status: 400 }
+        { status: HTTP_STATUS_BAD_REQUEST }
       );
     }
 
@@ -64,7 +65,7 @@ export async function POST(req: Request) {
       {
         error: error instanceof Error ? error.message : "Failed to solve expression",
       },
-      { status: 500 }
+      { status: HTTP_STATUS_INTERNAL_SERVER_ERROR }
     );
   }
 }

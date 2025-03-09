@@ -48,11 +48,3 @@ Example for expression "sin(45) - sin(90)":
   "finalResult": "-0.2929"
 }`;
 
-export interface StepByStepSolution {
-  steps: {
-    explanation: string;
-    result?: string;
-  }[];
-  finalResult: string;
-  error?: string;
-}

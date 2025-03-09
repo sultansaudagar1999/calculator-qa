@@ -4,7 +4,7 @@ import { useState, useCallback } from "react";
 import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
 import { evaluate } from "@/lib/calculator-utils";
-import type { StepByStepSolution } from "@/lib/prompt";
+import type { StepByStepSolution } from "@/lib/types";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
