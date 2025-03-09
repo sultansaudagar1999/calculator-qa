@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
 import { evaluate } from "@/lib/calculator-utils";
 import type { StepByStepSolution } from "@/lib/prompt";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 export default function AdvanceCalculator() {
   const [input, setInput] = useState("");
@@ -22,7 +24,7 @@ export default function AdvanceCalculator() {
       // First try to evaluate the expression to check if it's valid
       const finalResult = evaluate(input);
 
-      // Call the ChatGPT API for step-by-step solution
+      // Call the API for step-by-step solution
       const response = await fetch("/api/advance-calculator", {
         method: "POST",
         headers: {
@@ -56,6 +58,16 @@ export default function AdvanceCalculator() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-4">
+      {/* Back Button */}
+      <Link
+        href="/"
+        className="fixed top-4 left-4 z-50 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors flex items-center justify-center"
+        title="Back to Home"
+      >
+        <ArrowLeft className="h-6 w-6 text-gray-700" />
+        <span className="sr-only">Back to Home</span>
+      </Link>
+
       <div className="max-w-3xl mx-auto">
         <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">
           Advanced Calculator

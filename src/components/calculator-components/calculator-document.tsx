@@ -36,7 +36,7 @@ export default function DocumentationButton({
           <DialogHeader>
             <DialogTitle>Calculator Documentation</DialogTitle>
             <DialogDescription>
-              Learn how to use the scientific calculator effectively
+              Learn how to use the calculator effectively
             </DialogDescription>
           </DialogHeader>
 
@@ -46,7 +46,10 @@ export default function DocumentationButton({
               <h3 className="font-medium">Basic Operations</h3>
               <ul className="list-disc pl-5 mt-2 space-y-1">
                 <li>Numbers: Use the number pad (0-9) and decimal point (.)</li>
-                <li>Basic Arithmetic: +, -, *, / for addition, subtraction, multiplication, division</li>
+                <li>
+                  Basic Arithmetic: +, -, *, / for addition, subtraction,
+                  multiplication, division
+                </li>
                 <li>Equals (=): Calculate the result</li>
                 <li>Clear (C): Reset the calculator</li>
                 <li>Backspace (⌫): Delete the last character</li>
@@ -66,23 +69,43 @@ export default function DocumentationButton({
             </div>
 
             <div>
-              <h3 className="font-medium">Advanced Features</h3>
+              <h3 className="font-medium">Advanced Calculator Features</h3>
               <ul className="list-disc pl-5 mt-2 space-y-1">
+                <li>
+                  Step-by-Step Solutions: Click &quot;Try Advanced
+                  Calculator&quot; for detailed solutions
+                </li>
                 <li>Complex Numbers: Supports i for imaginary numbers</li>
-                <li>Matrix Operations: Use [ ] for matrices (e.g., [1,2;3,4])</li>
+                <li>
+                  Matrix Operations: Use [ ] for matrices (e.g., [1,2;3,4])
+                </li>
                 <li>Unit Conversions: e.g., &quot;12 inch to cm&quot;</li>
-                <li>Error Handling: Clear error messages for invalid inputs</li>
+                <li>
+                  Detailed Explanations: Get step-by-step breakdowns of
+                  calculations
+                </li>
+                <li>Mathematical Proofs: See intermediate steps and results</li>
               </ul>
             </div>
 
             <div>
-              <h3 className="font-medium">Tips & Shortcuts</h3>
+              <h3 className="font-medium">Tips & Navigation</h3>
               <ul className="list-disc pl-5 mt-2 space-y-1">
-                <li>Switch between Basic and Scientific modes using the tabs</li>
-                <li>Keyboard shortcuts: Enter for =, Escape for C, Backspace for ⌫</li>
-                <li>Scientific shortcuts: &apos;s&apos; for sin, &apos;c&apos; for cos, &apos;t&apos; for tan</li>
+                <li>
+                  Switch between Basic and Scientific modes using the tabs
+                </li>
+                <li>Use the Advanced Calculator for complex expressions</li>
+                <li>
+                  Keyboard shortcuts: Enter for =, Escape for C, Backspace for ⌫
+                </li>
+                <li>
+                  Scientific shortcuts: &apos;s&apos; for sin, &apos;c&apos; for
+                  cos, &apos;t&apos; for tan
+                </li>
                 <li>Results are formatted to maintain precision</li>
-                <li>Very small numbers are automatically converted to 0</li>
+                <li>
+                  Use the back arrow (←) to return to the basic calculator
+                </li>
               </ul>
             </div>
           </div>

@@ -2,7 +2,6 @@
 
 import Calculator from "@/components/calculator-components/calculator";
 import DocumentationButton from "@/components/calculator-components/calculator-document";
-import Footer from "@/components/global/footer";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -44,7 +43,7 @@ export default function Home() {
         </div>
       </main>
 
-      <Footer />
+      
     </div>
   );
 }
