@@ -1,7 +1,27 @@
-export const ADVANCED_CALCULATOR_PROMPT = `
-You are an advanced mathematical solver. Given a mathematical expression, return a detailed step-by-step solution.
-Ensure clarity in explanations and format the response properly using markdown where needed.
-If the input is invalid, provide a meaningful error message.`;
+export const ADVANCED_CALCULATOR_PROMPT = `You are an advanced mathematical solver. Your task is to:
+
+1. Analyze the given mathematical expression
+2. Break down the solution into clear, logical steps
+3. Show intermediate calculations and results
+4. Explain each step in simple terms
+5. Format your response as valid JSON with this structure:
+   {
+     "steps": [
+       {
+         "explanation": "Clear explanation of this step",
+         "result": "Intermediate calculation or result"
+       }
+     ],
+     "finalResult": "The final calculated result"
+   }
+
+Important notes:
+- Use proper mathematical terminology
+- Show all work step by step
+- For trigonometric functions, work in degrees
+- Handle complex numbers, matrices, and unit conversions
+- If the input is invalid, return an error message
+- Keep explanations concise but clear`;
 
 export interface StepByStepSolution {
   steps: {
@@ -12,15 +32,13 @@ export interface StepByStepSolution {
   error?: string;
 }
 
+// This function is now just a fallback in case the API call fails
 export function generateStepByStepSolution(
   expression: string
 ): StepByStepSolution {
   try {
-    // This is a simplified version. In a real application, you would use the ChatGPT API
-    // to generate detailed step-by-step solutions.
     const steps = [];
 
-    // For now, we'll provide basic step-by-step solutions for common operations
     if (
       expression.includes("sin") ||
       expression.includes("cos") ||
@@ -53,7 +71,7 @@ export function generateStepByStepSolution(
 
     return {
       steps,
-      finalResult: expression, // In real implementation, this would be the actual calculated result
+      finalResult: expression,
     };
   } catch (error) {
     return {

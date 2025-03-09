@@ -5,14 +5,12 @@ import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
 import { evaluate } from "@/lib/calculator-utils";
 import { generateStepByStepSolution } from "@/lib/prompt";
+import type { StepByStepSolution } from "@/lib/prompt";
 
 export default function AdvanceCalculator() {
   const [input, setInput] = useState("");
-  const [solution, setSolution] = useState<{
-    steps: { explanation: string; result?: string }[];
-    finalResult: string;
-    error?: string;
-  } | null>(null);
+  const [solution, setSolution] = useState<StepByStepSolution | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSolve = useCallback(async () => {
     if (!input.trim()) {
@@ -20,22 +18,46 @@ export default function AdvanceCalculator() {
       return;
     }
 
+    setLoading(true);
     try {
-      // Get step-by-step solution
-      const stepSolution = generateStepByStepSolution(input);
-
-      // Calculate final result using our existing evaluate function
+      // First try to evaluate the expression to check if it's valid
       const finalResult = evaluate(input);
 
+      // Call the ChatGPT API for step-by-step solution
+      const response = await fetch("/api/advance-calculator", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ expression: input }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to get solution");
+      }
+
+      const data = await response.json();
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      // Ensure the solution has the final calculated result
       setSolution({
-        ...stepSolution,
-        finalResult,
+        ...data,
+        finalResult: finalResult,
       });
     } catch (error) {
-      toast.error(
-        error instanceof Error ? error.message : "Invalid expression"
-      );
-      setSolution(null);
+      // If API fails, fall back to basic step generation
+      const basicSolution = generateStepByStepSolution(input);
+      setSolution({
+        ...basicSolution,
+        error:
+          error instanceof Error ? error.message : "Failed to solve expression",
+      });
+      toast.error("Could not generate detailed solution. Showing basic steps.");
+    } finally {
+      setLoading(false);
     }
   }, [input]);
 
@@ -66,8 +88,9 @@ export default function AdvanceCalculator() {
           <Button
             onClick={handleSolve}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg"
+            disabled={loading}
           >
-            Solve Step by Step
+            {loading ? "Solving..." : "Solve Step by Step"}
           </Button>
         </div>
 
