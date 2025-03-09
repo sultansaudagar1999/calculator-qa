@@ -108,7 +108,7 @@ A modern, feature-rich calculator built with Next.js, TypeScript, and Tailwind C
 
 ## 🌐 API Routes
 
-### POST /api/solve
+### POST /api/advance-calculator
 
 Generates step-by-step solutions for mathematical expressions:
 
