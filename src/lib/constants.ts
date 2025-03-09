@@ -1,4 +1,4 @@
-export const scientificButtons = [
+export const SCIENTIFIC_BUTTONS = [
     "C",
     "⌫",
     "(",
@@ -29,7 +29,7 @@ export const scientificButtons = [
     "√",
   ]
 
-export const basicButtons = [
+export const BASIC_BUTTONS = [
     "C",
     "⌫",
     "(",

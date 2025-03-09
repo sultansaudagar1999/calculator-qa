@@ -1,6 +1,6 @@
 "use client"
 
-import { basicButtons, scientificButtons } from "@/lib/constants"
+import { BASIC_BUTTONS, SCIENTIFIC_BUTTONS } from "@/lib/constants"
 import { CalculatorButton } from "./calculator-button"
 
 interface CalculatorButtonGridProps {
@@ -10,7 +10,7 @@ interface CalculatorButtonGridProps {
 
 export function CalculatorButtonGrid({ mode, onButtonClick }: CalculatorButtonGridProps) {
  
-  const buttons = mode === "basic" ? basicButtons : scientificButtons
+  const buttons = mode === "basic" ? BASIC_BUTTONS : SCIENTIFIC_BUTTONS
 
   return (
     <div className={`grid ${mode === "basic" ? "grid-cols-4" : "grid-cols-4 md:grid-cols-4"} gap-2`}>
