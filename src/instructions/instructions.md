@@ -1,7 +1,7 @@
 # **Product Requirements Document (PRD) - Calculator App**
 
 ## **Overview**
-The **Calculator App** is designed to provide both **basic** and **scientific** mathematical calculations with a user-friendly interface. It will feature optimized performance and a seamless user experience.
+The **Calculator App** is designed to provide both **basic** and **scientific** mathematical calculations with a user-friendly interface. It will feature optimized performance and a seamless user experience. Additionally, an **Advanced Calculator Page** will allow users to enter complex mathematical expressions and receive a **step-by-step solution**.
 
 ## **Core Functionality**
 The calculator will support the following features:
@@ -11,6 +11,7 @@ The calculator will support the following features:
   - Trigonometric functions (sin, cos, tan, etc.)
   - Matrix operations
   - Unit conversions (e.g., cm to inches)
+  - **Step-by-step solution generation** for advanced expressions
 - **Error Handling**: Notify users with error messages for invalid input using `react-toastify`
 - **Optimized Performance**: Utilize `useCallback` and `useMemo` for better rendering performance
 
@@ -24,6 +25,7 @@ The calculator will support the following features:
 
 ## **Project Structure**
 ```
+.
 ├── components.json
 ├── eslint.config.mjs
 ├── next.config.ts
@@ -40,6 +42,9 @@ The calculator will support the following features:
 ├── README.md
 ├── src
 │   ├── app
+│   │   ├── advance-calculator
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
 │   │   ├── favicon.ico
 │   │   ├── globals.css
 │   │   ├── layout.tsx
@@ -49,16 +54,21 @@ The calculator will support the following features:
 │   │   │   ├── calculator-button-grid.tsx
 │   │   │   ├── calculator-button.tsx
 │   │   │   ├── calculator-display.tsx
+│   │   │   ├── calculator-document.tsx
 │   │   │   ├── calculator-tabs.tsx
 │   │   │   └── calculator.tsx
+│   │   ├── global
+│   │   │   └── footer.tsx
 │   │   └── ui
 │   │       ├── button.tsx
+│   │       ├── dialog.tsx
 │   │       └── tabs.tsx
 │   ├── instructions
 │   │   └── instructions.md
 │   └── lib
 │       ├── calculator-utils.ts
 │       ├── constants.ts
+│       ├── prompt.ts
 │       └── utils.ts
 └── tsconfig.json
 ```
@@ -71,15 +81,26 @@ The `math.js` library will be used for handling complex mathematical computation
 - `evaluate('9 / 3 + 2i')` → `3 + 2i`
 - `evaluate('det([-1, 2; 3, 1])')` → `-7`
 
-## **Optimization Strategies**
-- **Using `useCallback` for Memoization**: Prevent unnecessary re-renders by memoizing functions.
-- **Using `useMemo` for Expensive Computations**: Optimize recalculations for complex mathematical operations.
+## **Advanced Calculator Page**
+The **Advanced Calculator Page** will allow users to enter complex expressions and receive **step-by-step solutions**. This will be useful for:
+- **Algebraic expressions**
+- **Differentiation and Integration**
+- **Solving equations**
+- **Matrix operations**
+- **Complex number calculations**
 
-## **Error Handling with react-toastify**
-- Display error messages for invalid inputs using `react-toastify` to improve user experience.
+### **Prompt for Advanced Calculator (in `prompt.ts`)**
+```ts
+export const ADVANCED_CALCULATOR_PROMPT = `
+You are an advanced mathematical solver. Given a mathematical expression, return a detailed step-by-step solution.
+Ensure clarity in explanations and format the response properly using markdown where needed.
+If the input is invalid, provide a meaningful error message.`;
+```
 
-## **Conclusion**
-This PRD outlines the key functionalities, technology stack, project structure, and optimization strategies for the **Calculator App**. By leveraging **Next.js, TypeScript, Tailwind, math.js, and react-toastify**, we aim to provide a highly efficient and user-friendly calculation tool.
-
-
+## **Key Instructions**
+- **Basic Mode:** Standard calculator functionalities for quick calculations.
+- **Scientific Mode:** Includes trigonometry, logarithms, and advanced operations.
+- **Advanced Mode:** Allows complex expressions with step-by-step solutions.
+- **Error Handling:** Use `react-toastify` to display errors.
+- **Performance Optimization:** Implement memoization with `useCallback` and `useMemo`.
 
