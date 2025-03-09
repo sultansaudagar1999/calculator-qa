@@ -78,8 +78,6 @@ The calculator will support the following features:
 │   │   │   ├── calculator-document.tsx
 │   │   │   ├── calculator-tabs.tsx
 │   │   │   └── calculator.tsx
-│   │   ├── global
-│   │   │   └── footer.tsx
 │   │   └── ui
 │   │       ├── button.tsx
 │   │       ├── dialog.tsx
@@ -90,6 +88,7 @@ The calculator will support the following features:
 │       ├── calculator-utils.ts
 │       ├── constants.ts
 │       ├── prompt.ts
+│       ├── types.ts
 │       └── utils.ts
 └── tsconfig.json
 ```
