@@ -20,29 +20,43 @@ export async function POST(req: Request) {
     const prompt = `
       ${ADVANCED_CALCULATOR_PROMPT}
       Solve this mathematical expression step by step: ${expression}
-      Please return the result in the following JSON format:
+
+      **Output Format (Strictly return only valid JSON):**
+      \`\`\`json
       {
         "steps": [
           { "explanation": "Step explanation", "result": "Intermediate result" }
         ],
         "finalResult": "Final calculated result"
       }
+      \`\`\`
+
+      **Important:** 
+      - Do not include any extra text before or after the JSON.
+      - Do not wrap the response in markdown or code blocks.
+      - Ensure the response is **valid JSON**.
     `;
 
     const result = await model.generateContent(prompt);
-    const response = await result.response.text(); // Extract response text
+    let responseText = await result.response.text(); // Extract response
+
+    // Ensure JSON extraction
+    const jsonMatch = responseText.match(/```json\s*([\s\S]*?)\s*```/);
+    if (jsonMatch) {
+      responseText = jsonMatch[1]; // Extract JSON part only
+    }
 
     let solution;
-
     try {
-      solution = JSON.parse(response);
+      solution = JSON.parse(responseText);
     } catch {
       solution = {
-        steps: [{ explanation: response || "No explanation available", result: "" }],
+        steps: [{ explanation: "Failed to parse response", result: responseText }],
         finalResult: "See steps above",
       };
     }
-
+    // for debugging
+    console.log(solution);
     return Response.json(solution);
   } catch (error) {
     console.error("Error in solve route:", error);

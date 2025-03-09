@@ -4,7 +4,6 @@ import { useState, useCallback } from "react";
 import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
 import { evaluate } from "@/lib/calculator-utils";
-import { generateStepByStepSolution } from "@/lib/prompt";
 import type { StepByStepSolution } from "@/lib/prompt";
 
 export default function AdvanceCalculator() {
@@ -48,13 +47,7 @@ export default function AdvanceCalculator() {
         finalResult: finalResult,
       });
     } catch (error) {
-      // If API fails, fall back to basic step generation
-      const basicSolution = generateStepByStepSolution(input);
-      setSolution({
-        ...basicSolution,
-        error:
-          error instanceof Error ? error.message : "Failed to solve expression",
-      });
+      console.error(error);
       toast.error("Could not generate detailed solution. Showing basic steps.");
     } finally {
       setLoading(false);
@@ -72,7 +65,7 @@ export default function AdvanceCalculator() {
           <div className="mb-4">
             <label
               htmlFor="expression"
-              className="block text-sm font-medium text-gray-700 mb-2"
+              className="block text-md font-medium text-gray-700 mb-2"
             >
               Enter Mathematical Expression
             </label>
