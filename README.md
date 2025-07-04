@@ -17,7 +17,7 @@ A modern, feature-rich calculator built with Next.js, TypeScript, and Tailwind C
 
 - Basic arithmetic operations (+, -, \*, /)
 - Real-time calculation
-- Keyboard support
+- Keyboard supports
 - Clear and backspace functionality
 - Error handling with toast notifications
 
